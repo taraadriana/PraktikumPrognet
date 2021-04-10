@@ -49,10 +49,29 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="phone" type="number" class="form-control"
-                                           name="phone" required autocomplete="phone">
-                                </div>
+                                    <input id="phone" type="text" class="form-control" 
+                                     name="phone" placeholder = "isikan +62" required autocomplete="phone">
+                               <?php
+                               if (isset($_POST['submit'])) {
+                                    // mengambil nomor handphone telah diinput
+                                    $phone = $_POST['phone'];
+                                    // validasi inputan nomor handphone
+                                        if (!preg_match("/^[0-9|(\+|)]*$/", $phone) OR strlen(strpos($phone, "+", 1)) > 0) {
+                                            echo "<strong>Handphone hanya boleh menggunakan angka dan diawali simbol +</strong>";
+                                        }   
+                                        else if (substr($phone, 0, 3) != "+62" ) {
+                                            echo "<strong>Handphone harus diawali dengan kode negara +62</strong>";
+                                        }
+                                        else if (substr($phone, 3, 1) == "0" ) {
+                                            echo "<strong>Handphone tidak boleh diikuti dengan angka 0 setelah kode negara</strong>";
+                                        }
+                                        else {
+                                            // menampilkan nomor handphone
+                                                echo "<strong>Handphone : $tampil_handphone</strong>";
+                                        }                
+                                }?>
                             </div>
+                        </div>
 
                             <div class="form-group row">
                                 <label for="address"
@@ -90,6 +109,30 @@
                                            name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
+
+                           <!--div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    <div class="g-recaptcha" data-sitekey="{{env('NOCAPTCHA_SITEKEY')}}"></div>
+                                    @if($errors->has('g-recaptcha-response'))
+                                        <span class="invalid-feedback" style="display:block">
+                                            <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>  -->
+
+                        <!-- google recaptcha -->
+                        <div class="form-group row {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                            <label class="col-md-4 col-form-label text-md-right">Captcha</label>
+                            <div class="col-md-6">
+                                {!! app('captcha')->display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> 
 
                             <div class="form-group row mb-0">
                             <style>

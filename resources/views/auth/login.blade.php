@@ -58,6 +58,19 @@
                                 </div>
                             </div>
 
+                            <!-- google recaptcha -->
+                        <div class="form-group row {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                            <label class="col-md-4 col-form-label text-md-right">Captcha</label>
+                            <div class="col-md-6">
+                                {!! app('captcha')->display() !!}
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> 
+
                             <div class="form-group row mb-0">
                             <style>
                                 .button {

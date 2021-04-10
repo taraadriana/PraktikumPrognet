@@ -24,9 +24,9 @@ class CreateAdminsTable extends Migration
         //     $table->timestamps();
         // });
 
-        Schema::table('admins', function (Blueprint $table){
+        /* Schema::table('admins', function (Blueprint $table){
             $table->string('phone')->after('email');
-        });
+        }); */
     }
 
     /**

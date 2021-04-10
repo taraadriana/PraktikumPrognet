@@ -28,8 +28,12 @@ class CreateUsersTable extends Migration
         //     $table->string('phone')->after('email');
         // });
 
-        Schema::table('users', function (Blueprint $table){
+        /*Schema::table('users', function (Blueprint $table){
             $table->string('address')->after('phone');
+        }); */
+
+        Schema::table('users', function (Blueprint $table){
+            $table->string('captcha')->after('remember_token');
         });
     }
 
